@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="A-Level Master">
+    
+    <link rel="apple-touch-icon" href="icon.png">
+    <link rel="icon" type="image/png" href="icon.png">
+
+    <title>A-Level Master Timetable</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #f8fafc;
+            padding-top: env(safe-area-inset-top); 
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+        }
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+    </style>
+</head>
+<body class="antialiased text-slate-800 pb-20">
+
+    <header class="pt-10 pb-8 px-4 sm:px-6 lg:px-8 text-center sticky top-0 bg-[#f8fafc]/90 backdrop-blur-md z-20 border-b border-slate-200 shadow-sm">
+        <h1 class="text-3xl md:text-4xl font-extrabold tracking-tight text-slate-900">
+            A-Level Master Plan
+        </h1>
+        <p class="mt-2 text-sm text-slate-600 font-medium">
+            OCR Biology & Chemistry 2026-2027
+        </p>
+    </header>
+
+    <main class="max-w-3xl mx-auto px-4 sm:px-6 mt-8">
+        
+        <div class="mb-6 flex items-center gap-4">
+            <div class="h-px bg-slate-300 flex-1"></div>
+            <h2 class="text-lg font-bold text-slate-500 uppercase tracking-widest">Phase 1: Content & Testing</h2>
+            <div class="h-px bg-slate-300 flex-1"></div>
+        </div>
+
+        <div id="phase1-container" class="space-y-5 mb-12"></div>
+
+        <div class="mb-6 flex items-center gap-4 mt-16">
+            <div class="h-px bg-indigo-300 flex-1"></div>
+            <h2 class="text-lg font-bold text-indigo-500 uppercase tracking-widest flex items-center gap-2">
+                <span>Phase 2: Exam Practice</span>
+            </h2>
+            <div class="h-px bg-indigo-300 flex-1"></div>
+        </div>
+
+        <div id="phase2-container" class="space-y-5"></div>
+
+    </main>
+
+    <script>
+        // Phase 1 Data: Oct 4 - Apr 4
+        const phase1Data = [
+            { week: 1, date: 'Oct 4', subject: 'Biology', y2: 'Communication & Homeostasis', y1: 'Cell Structure' },
+            { week: 2, date: 'Oct 11', subject: 'Chemistry', y2: 'Equilibria', y1: 'Atoms, Reactions & Amount of Substance' },
+            { week: 3, date: 'Oct 18', subject: 'Biology', y2: 'Excretion', y1: 'Biological Molecules' },
+            { week: 4, date: 'Oct 25', subject: 'Chemistry', y2: 'Acids, Bases & Buffers', y1: 'Acid-base & Redox Reactions' },
+            { week: 5, date: 'Nov 1', subject: 'Biology', y2: 'Neuronal Communication', y1: 'Nucleotides & Nucleic Acids' },
+            { week: 6, date: 'Nov 8', subject: 'Chemistry', y2: 'Thermodynamics', y1: 'Electrons, Bonding, Structure & Shapes' },
+            { week: 7, date: 'Nov 15', subject: 'Biology', y2: 'Hormonal Communication', y1: 'Enzymes' },
+            { week: 8, date: 'Nov 22', subject: 'Chemistry', y2: 'Redox & Electrochemistry', y1: 'Periodicity & Group 2' },
+            { week: 9, date: 'Nov 29', subject: 'Biology', y2: 'Plant & Animal Responses', y1: 'Biological Membranes' },
+            { week: 10, date: 'Dec 6', subject: 'Chemistry', y2: 'Transition Elements', y1: 'The Halogens' },
+            { week: 11, date: 'Dec 13', subject: 'Biology', y2: 'Photosynthesis', y1: 'Cell Division & Cellular Organisation' },
+            { week: 12, date: 'Dec 20', subject: 'Chemistry', y2: 'Benzene & Aromatic Compounds', y1: 'Enthalpy Changes' },
+            { week: 13, date: 'Dec 27', subject: 'Biology', y2: 'Respiration', y1: 'Exchange Surfaces' },
+            { week: 14, date: 'Jan 3', subject: 'Chemistry', y2: 'Carbonyl Compounds', y1: 'Reaction Rates' },
+            { week: 15, date: 'Jan 10', subject: 'Biology', y2: 'Cellular Control', y1: 'Transport in Animals' },
+            { week: 16, date: 'Jan 17', subject: 'Chemistry', y2: 'Carboxylic Acids & Esters', y1: 'Chemical Equilibrium' },
+            { week: 17, date: 'Jan 24', subject: 'Biology', y2: 'Patterns of Inheritance', y1: 'Transport in Plants' },
+            { week: 18, date: 'Jan 31', subject: 'Chemistry', y2: 'Nitrogen Compounds', y1: 'Basic Concepts (Organic)' },
+            { week: 19, date: 'Feb 7', subject: 'Biology', y2: 'Manipulating Genomes', y1: 'Communicable Diseases & Immune System' },
+            { week: 20, date: 'Feb 14', subject: 'Chemistry', y2: 'Optical Isomerism', y1: 'Alkanes & Alkenes' },
+            { week: 21, date: 'Feb 21', subject: 'Biology', y2: 'Cloning & Biotechnology', y1: 'Biodiversity' },
+            { week: 22, date: 'Feb 28', subject: 'Chemistry', y2: 'Polymers', y1: 'Alcohols' },
+            { week: 23, date: 'Mar 7', subject: 'Biology', y2: 'Ecosystems', y1: 'Classification & Evolution' },
+            { week: 24, date: 'Mar 14', subject: 'Chemistry', y2: 'Extending Carbon Chains', y1: 'Haloalkanes' },
+            { week: 25, date: 'Mar 21', subject: 'Biology', y2: 'Populations & Sustainability', y1: 'Y1 Synoptic Review (Biology)' },
+            { week: 26, date: 'Mar 28', subject: 'Chemistry', y2: 'Organic Synthesis', y1: 'Organic Synthesis (Y1)' },
+            { week: 27, date: 'Apr 4', subject: 'Chemistry', y2: 'Analytical Techniques', y1: 'Analytical Techniques (Y1)' }
+        ];
+
+        // Phase 2 Data: Apr 5 - Jun 20
+        const phase2Data = [
+            { week: 28, dates: "Apr 5 - Apr 11", tasks: ["Chem P1: Specimen, 2017", "Bio P1: Specimen, 2017", "Chem P2: Specimen", "Bio P2: Specimen"] },
+            { week: 29, dates: "Apr 12 - Apr 18", tasks: ["Chem P1: 2018, 2019", "Bio P1: 2018, 2019", "Chem P3: Specimen", "Bio P3: Specimen"] },
+            { week: 30, dates: "Apr 19 - Apr 25", tasks: ["Chem P1: 2020, 2021", "Bio P1: 2020, 2021", "Chem P2: 2017", "Bio P2: 2017"] },
+            { week: 31, dates: "Apr 26 - May 2", tasks: ["Chem P1: 2022, 2023", "Bio P1: 2022, 2023", "Chem P3: 2017", "Bio P3: 2017"] },
+            { week: 32, dates: "May 3 - May 9", tasks: ["Chem P1: 2024 (FINAL P1)", "Bio P1: 2024 (FINAL P1)", "Chem P2: 2018, 2019", "Bio P2: 2018, 2019"] },
+            { week: 33, dates: "May 10 - May 16", tasks: ["Chem P3: 2018, 2019", "Bio P3: 2018, 2019", "Chem P2: 2020", "Bio P2: 2020"] },
+            { week: 34, dates: "May 17 - May 23", tasks: ["Review Chem P1 Mistakes", "Chem P3: 2020", "Bio P3: 2020", "Chem P2: 2021, 2022"] },
+            { week: 35, dates: "May 24 - May 30", isExamWeek: true, exam: "🚨 May 28: Chemistry Paper 1", tasks: ["Bio P2: 2021, 2022", "Chem P3: 2021, 2022", "Review Bio P1 Mistakes"] },
+            { week: 36, dates: "May 31 - Jun 6", isExamWeek: true, exam: "🚨 Jun 7: Biology Paper 1", tasks: ["Chem P2: 2023, 2024 (FINAL P2)", "Bio P2: 2023, 2024 (FINAL P2)", "Chem P3: 2023"] },
+            { week: 37, dates: "Jun 7 - Jun 13", isExamWeek: true, exam: "🚨 Jun 10: Chemistry Paper 2", tasks: ["Bio P3: 2023", "Chem P3: 2024 (FINAL P3)", "Review Chem P2 & Bio P2 Mistakes"] },
+            { week: 38, dates: "Jun 14 - Jun 20", isExamWeek: true, exam: "🚨 Jun 14: Bio P2 | Jun 17: Chem P3 | Jun 18: Bio P3", tasks: ["Bio P3: 2024 (FINAL P3)", "Final Light Review"] }
+        ];
+
+        // Render Phase 1
+        const container1 = document.getElementById('phase1-container');
+        phase1Data.forEach((item) => {
+            const isBio = item.subject === 'Biology';
+            const themeColor = isBio ? 'emerald' : 'indigo';
+            
+            const cardHTML = `
+                <div class="glass-card rounded-2xl shadow-sm border border-slate-200/70 p-4 sm:p-5 relative overflow-hidden group">
+                    <div class="absolute top-0 left-0 w-1.5 h-full bg-${themeColor}-400"></div>
+                    
+                    <div class="flex justify-between items-center mb-4 ml-2">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-sm font-bold text-slate-800">Wk ${item.week}</span>
+                            <span class="text-xs font-semibold text-slate-400">&bull;</span>
+                            <span class="text-sm font-medium text-slate-500">${item.date}</span>
+                        </div>
+                        <span class="text-xs font-bold uppercase tracking-wider text-${themeColor}-600 bg-${themeColor}-50 px-2 py-1 rounded-md">
+                            ${item.subject}
+                        </span>
+                    </div>
+
+                    <div class="ml-2 space-y-3">
+                        <label class="flex items-start cursor-pointer group/task">
+                            <input type="checkbox" class="mt-1 w-4 h-4 text-${themeColor}-600 rounded border-slate-300 focus:ring-${themeColor}-500">
+                            <div class="ml-3">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Y2 Lesson</span>
+                                <span class="text-sm font-semibold text-slate-800 group-hover/task:text-${themeColor}-700 transition-colors">${item.y2}</span>
+                            </div>
+                        </label>
+                        
+                        <div class="w-full h-px bg-slate-100 ml-7"></div>
+
+                        <label class="flex items-start cursor-pointer group/task">
+                            <input type="checkbox" class="mt-1 w-4 h-4 text-${themeColor}-600 rounded border-slate-300 focus:ring-${themeColor}-500">
+                            <div class="ml-3">
+                                <span class="text-[10px] font-bold text-slate-400 uppercase tracking-widest block mb-0.5">Y1 Topic Test</span>
+                                <span class="text-sm font-semibold text-slate-700 group-hover/task:text-${themeColor}-700 transition-colors">${item.y1}</span>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+            `;
+            container1.innerHTML += cardHTML;
+        });
+
+        // Render Phase 2
+        const container2 = document.getElementById('phase2-container');
+        phase2Data.forEach((item) => {
+            const isExam = item.isExamWeek;
+            
+            let tasksHtml = item.tasks.map(task => `
+                <label class="flex items-start mb-2.5 cursor-pointer group/task">
+                    <input type="checkbox" class="mt-0.5 w-4 h-4 text-slate-800 rounded border-slate-300 focus:ring-slate-500">
+                    <span class="ml-3 text-sm font-medium text-slate-600 group-hover/task:text-slate-900 transition-colors">${task}</span>
+                </label>
+            `).join('');
+
+            const examBanner = isExam ? `
+                <div class="mt-4 mb-3 bg-rose-50 text-rose-700 text-xs font-bold px-3 py-2.5 rounded-lg border border-rose-100 uppercase tracking-wide flex items-center">
+                    ${item.exam}
+                </div>
+            ` : '';
+
+            const cardHTML = `
+                <div class="glass-card rounded-2xl shadow-sm border ${isExam ? 'border-rose-200 shadow-rose-100/50' : 'border-slate-200/70'} p-4 sm:p-5">
+                    <div class="flex justify-between items-center mb-2">
+                        <h3 class="font-bold text-slate-800">Week ${item.week}</h3>
+                        <span class="text-xs font-semibold text-slate-500 bg-slate-100 px-2.5 py-1 rounded-md">${item.dates}</span>
+                    </div>
+                    ${examBanner}
+                    <div class="mt-4">
+                        ${tasksHtml}
+                    </div>
+                </div>
+            `;
+            container2.innerHTML += cardHTML;
+        });
+    </script>
+</body>
+</html>
